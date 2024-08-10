@@ -58,6 +58,13 @@
 	
   ### ENABLE REMOTE VSCODE TO CONNECT ###
 	programs.nix-ld.enable = true;
+  /*
+  Create symlinks for nixos configuration files so user can edit
+  mkdir ~/etc
+  sudo mv /etc/nixos ~/etc/
+  sudo chown -R $(id -un):users ~/etc/nixos
+  sudo ln -s ~/etc/nixos /etc/
+  */
 
 
 }
