@@ -17,6 +17,10 @@
   time.timeZone = "America/New_York";
 
   ### ADD AND SETUP USERS ###
+  /*
+  Generate ssh key for user
+  ssh-keygen
+  */
   users.users.patrick = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
