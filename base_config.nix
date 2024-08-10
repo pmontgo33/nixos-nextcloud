@@ -1,17 +1,22 @@
 { pkgs, modulesPath, ... }: 
 {
   imports = [
-#    (modulesPath + "/virtualisation/proxmox-lxc.nix")
     /etc/nixos/samba.nix
   ];
 	
+  ### INSTALL PACKAGES ###
   environment.systemPackages = with pkgs; [
     vim
     tmux
     git
-    fail2ban 		
+    fail2ban
+		nix-ld
   ];
 
+  ### SET TIMEZONE ###
+  time.timeZone = "America/New_York";
+
+  ### ADD AND SETUP USERS ###
   users.users.patrick = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
@@ -27,11 +32,11 @@
     }
   ];
 
-  # Enable OpenSSH daemon
+  ### OPENSSH ###
   services.openssh.enable = true;
 #  services.openssh.settings.PermitRootLogin = "yes";
   
-  ### Tailscale ###
+  ### TAILSCALE ###
   services.tailscale.enable = true;
   /* 
   add these lines to /etc/pve/lxc/ID.conf
@@ -39,6 +44,7 @@
   lxc.mount.entry: /dev/net/tun dev/net/tun none bind,create=file
   */
 	
+  ### SETUP PACKAGES ###
   programs.tmux = {
     enable = true;
     extraConfig = builtins.readFile ./tmux.conf;
@@ -49,6 +55,9 @@
 #    userName  = "Monty";
 #    userEmail = "21371673+pmontgo33@users.noreply.github.com";
   };
+	
+  ### ENABLE REMOTE VSCODE TO CONNECT ###
+	programs.nix-ld.enable = true;
 
 
 }
